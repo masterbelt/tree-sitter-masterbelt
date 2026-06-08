@@ -1,8 +1,7 @@
 {
   "name": "@masterbelt/tree-sitter-masterbelt",
-  "version": "0.1.0",
+  "version": "0.1.20260608+fc54b2a",
   "description": "masterbelt grammar for tree-sitter",
-  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -16,5 +15,22 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "0.26.9"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "keywords": [
+    "tree-sitter",
+    "masterbelt",
+    "parser",
+    "grammar"
+  ],
+  "files": [
+    "grammar.js",
+    "lexical.js",
+    "tree-sitter.json",
+    "src/",
+    "queries/",
+    "*.wasm"
+  ]
 }
