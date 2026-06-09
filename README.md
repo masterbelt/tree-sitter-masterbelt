@@ -6,7 +6,7 @@ The [tree-sitter](https://tree-sitter.github.io/) grammar for the
 > **This repository is a generated mirror — do not edit it here.** The source is
 > `toolchain/grammars/tree-sitter-masterbelt` in the masterbelt monorepo; this
 > tree is assembled and published from there (`build/publish-tree-sitter.sh`).
-> Version `0.1.20260608+fc54b2a`, cut from masterbelt commit `fc54b2a78b319feac760cc1cfb88f2ddc73b6a5f` — the grammar ships
+> Version `0.1.20260609+52c1e51`, cut from masterbelt commit `52c1e51e46177503af8411b8e30e650b720feed0` — the grammar ships
 > under the same version as the language it tracks.
 
 The committed `src/parser.c` means consumers need no tree-sitter CLI — only a C

@@ -1,6 +1,6 @@
 {
   "name": "@masterbelt/tree-sitter-masterbelt",
-  "version": "0.1.20260608+fc54b2a",
+  "version": "0.1.20260609+52c1e51",
   "description": "masterbelt grammar for tree-sitter",
   "license": "MIT",
   "repository": {

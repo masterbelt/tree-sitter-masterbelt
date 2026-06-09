@@ -78,6 +78,7 @@ module.exports = grammar({
         $.func_decl,
         $.use_decl,
         $.assert_decl,
+        $.master_decl,
       ),
 
     // --- declarations --------------------------------------------------------
@@ -174,6 +175,50 @@ module.exports = grammar({
 
     assert_decl: ($) => seq(kw.assert, $._expr),
 
+    // --- master declarations -------------------------------------------------
+
+    // master Name { record <type-body> primary <key> }. master/record/primary
+    // are context keywords, exactly like the get/set/static modifiers: the
+    // lexer leaves them identifiers and the real parser recognises them by
+    // position, while here they are extracted as keywords (sound while they are
+    // not also used as ordinary names, which they are not in the corpus). Each
+    // is wrapped in a master_keyword node to mirror the CST's MasterKeyword.
+    //
+    // The keyword is pinned per construct (master_keyword for the head, then
+    // "record"/"primary" aliased to the same node name in the members) so a
+    // primary whose key is a bare identifier — which would also parse as a record
+    // body's type — is not ambiguous with the record member.
+    master_decl: ($) =>
+      seq(
+        optional(kw.pub),
+        $.master_keyword,
+        field("name", $.identifier),
+        op.LBrace,
+        repeat(choice($.master_record, $.master_primary)),
+        op.RBrace,
+      ),
+
+    master_keyword: ($) => "master",
+
+    master_record: ($) =>
+      seq(
+        alias("record", $.master_keyword),
+        field("type", $._type),
+        optional($.where_clause),
+        repeat($.impl_block),
+      ),
+
+    master_primary: ($) =>
+      seq(
+        alias("primary", $.master_keyword),
+        choice(
+          field("key", $.identifier),
+          // A trailing comma is permitted before ")", mirroring the concrete
+          // parser, so a composite key under construction is not flagged.
+          seq(op.LParen, commaSep1($.identifier), optional(op.Comma), op.RParen),
+        ),
+      ),
+
     // --- impl blocks and methods --------------------------------------------
 
     impl_block: ($) =>
@@ -214,10 +259,18 @@ module.exports = grammar({
 
     effect: ($) => choice(kw.io, kw.async, kw.nondet),
 
+    // A name position the grammar reads a reserved word as an ordinary
+    // identifier: a member after ".", a record field name, a parameter name.
+    // It mirrors the real parser's nameLike — every keyword is admissible there
+    // because the position begins no keyword construct (item.type, { type: ... },
+    // fn(for: int)). The tree-sitter lexer extracts keywords eagerly, so each
+    // must be listed explicitly to be accepted here.
+    _name: ($) => choice($.identifier, ...Object.values(lex.kw)),
+
     param_list: ($) => seq(op.LParen, commaSep($.param), op.RParen),
 
     param: ($) =>
-      seq(field("name", $.identifier), optional(seq(op.Colon, field("type", $._type)))),
+      seq(field("name", $._name), optional(seq(op.Colon, field("type", $._type)))),
 
     // --- type expressions ----------------------------------------------------
 
@@ -234,6 +287,7 @@ module.exports = grammar({
         $.builtin_type,
         $.null_type,
         $.self_type,
+        $.type_type,
       ),
 
     // A named type, optionally qualified by a sibling's namespace (geo.Point)
@@ -244,6 +298,10 @@ module.exports = grammar({
 
     null_type: ($) => kw.null,
     self_type: ($) => kw.self,
+    // The `type` keyword names the metatype (type : type). It is a builtin type
+    // name in type position, the CST's TypeName, admissible because the position
+    // never begins the `type Foo =` declaration the keyword otherwise heads.
+    type_type: ($) => kw.type,
 
     generic_params: ($) => seq(op.Lt, commaSep1($.generic_param), op.Gt),
     generic_param: ($) =>
@@ -255,7 +313,7 @@ module.exports = grammar({
     record_type: ($) =>
       seq(op.LBrace, repeat(seq($.field, optional(op.Comma))), op.RBrace),
     field: ($) =>
-      seq(field("name", $.identifier), op.Colon, field("type", $._type)),
+      seq(field("name", $._name), op.Colon, field("type", $._type)),
 
     // The return type is a primary type: a union return (fn(): A | B) would be
     // ambiguous with a union *of* function types, so it must be parenthesised.
@@ -350,7 +408,10 @@ module.exports = grammar({
         $.await_expr,
       ),
 
-    value_ref: ($) => $.identifier,
+    // A value reference: a name, or the `type` keyword naming the metatype as a
+    // value (const t = type). The real parser lowers `type` here to a NameRef,
+    // which value_ref aliases to in the CST skeleton.
+    value_ref: ($) => choice($.identifier, kw.type),
     self_expr: ($) => kw.self,
 
     literal: ($) =>
@@ -407,7 +468,7 @@ module.exports = grammar({
     arguments: ($) => seq(op.LParen, commaSep($._expr), op.RParen),
 
     member_expr: ($) =>
-      prec(PREC.postfix, seq(field("receiver", $._expr), op.Dot, field("member", $.identifier))),
+      prec(PREC.postfix, seq(field("receiver", $._expr), op.Dot, field("member", $._name))),
 
     index_expr: ($) =>
       prec(PREC.postfix, seq(field("receiver", $._expr), op.LBracket, $._expr, op.RBracket)),
@@ -433,7 +494,7 @@ module.exports = grammar({
         op.RBrace,
       ),
     record_field: ($) =>
-      seq(field("name", $.identifier), op.Colon, field("value", $._expr)),
+      seq(field("name", $._name), op.Colon, field("value", $._expr)),
 
     func_literal: ($) =>
       seq(
