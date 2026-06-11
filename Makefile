@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-masterbelt
 HOMEPAGE_URL := https://github.com/masterbelt/tree-sitter-masterbelt
-VERSION := 0.1.20260611-nightly.7c57d5a
+VERSION := 0.1.20260611-nightly.112677e
 
 # repository
 SRC_DIR := src
