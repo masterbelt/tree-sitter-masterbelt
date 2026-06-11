@@ -14,19 +14,19 @@
     }
   ],
   "metadata": {
-    "version": "0.1.20260610+fe74342",
+    "version": "0.1.20260611-nightly.7c57d5a",
     "license": "MIT",
     "description": "masterbelt grammar for tree-sitter",
     "links": {
-      "repository": "https://github.com/masterbelt/masterbelt"
+      "repository": "https://github.com/masterbelt/tree-sitter-masterbelt"
     }
   },
   "bindings": {
-    "c": false,
-    "go": false,
-    "node": false,
-    "python": false,
-    "rust": false,
-    "swift": false
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
   }
 }

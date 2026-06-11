@@ -1,36 +1,62 @@
 {
   "name": "@masterbelt/tree-sitter-masterbelt",
-  "version": "0.1.20260610+fe74342",
+  "version": "0.1.20260611-nightly.7c57d5a",
   "description": "masterbelt grammar for tree-sitter",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/masterbelt/masterbelt.git",
-    "directory": "toolchain/grammars/tree-sitter-masterbelt"
-  },
+  "repository": "https://github.com/masterbelt/tree-sitter-masterbelt",
   "scripts": {
-    "generate": "tree-sitter generate",
+    "generate": "tree-sitter generate --abi 14",
     "test": "tree-sitter test",
-    "parse": "tree-sitter parse"
+    "parse": "tree-sitter parse",
+    "install": "node-gyp-build"
   },
   "devDependencies": {
-    "tree-sitter-cli": "0.26.9"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "tree-sitter-cli": "0.26.9",
+    "prebuildify": "^6.0.1"
   },
   "keywords": [
+    "incremental",
+    "parsing",
     "tree-sitter",
     "masterbelt",
     "parser",
     "grammar"
   ],
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "dependencies": {
+    "node-addon-api": "^8.2.2",
+    "node-gyp-build": "^4.8.2"
+  },
+  "peerDependencies": {
+    "tree-sitter": ">=0.21.1"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
   "files": [
     "grammar.js",
     "lexical.js",
     "tree-sitter.json",
-    "src/",
-    "queries/",
+    "binding.gyp",
+    "bindings/node/*",
+    "prebuilds/**",
+    "queries/*",
+    "src/**",
     "*.wasm"
-  ]
+  ],
+  "exports": {
+    ".": {
+      "types": "./bindings/node/index.d.ts",
+      "default": "./bindings/node/index.js"
+    },
+    "./tree-sitter-masterbelt.wasm": "./tree-sitter-masterbelt.wasm",
+    "./grammar.js": "./grammar.js",
+    "./tree-sitter.json": "./tree-sitter.json",
+    "./queries/*": "./queries/*",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  }
 }
