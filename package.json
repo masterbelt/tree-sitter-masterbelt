@@ -1,9 +1,12 @@
 {
   "name": "@masterbelt/tree-sitter-masterbelt",
-  "version": "0.1.20260611-nightly.112677e",
+  "version": "0.1.20260612-nightly.2df8a77",
   "description": "masterbelt grammar for tree-sitter",
   "license": "MIT",
-  "repository": "https://github.com/masterbelt/tree-sitter-masterbelt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masterbelt/tree-sitter-masterbelt.git"
+  },
   "scripts": {
     "generate": "tree-sitter generate --abi 14",
     "test": "tree-sitter test",
