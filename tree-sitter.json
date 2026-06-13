@@ -14,7 +14,7 @@
     }
   ],
   "metadata": {
-    "version": "0.1.20260612-nightly.2df8a77",
+    "version": "0.1.20260613-nightly.1abb262",
     "license": "MIT",
     "description": "masterbelt grammar for tree-sitter",
     "links": {
