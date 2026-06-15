@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-masterbelt"
 description = "masterbelt grammar for tree-sitter"
-version = "0.1.20260614-nightly.8dbf6aa"
+version = "0.1.20260615-nightly.97fa27c"
 keywords = ["incremental", "parsing", "tree-sitter", "masterbelt"]
 classifiers = [
   "Intended Audience :: Developers",
