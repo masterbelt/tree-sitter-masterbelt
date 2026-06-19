@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-masterbelt
-        VERSION "0.1.20260618-nightly.5023f19"
+        VERSION "0.1.20260619-nightly.1e5f7f4"
         DESCRIPTION "masterbelt grammar for tree-sitter"
         HOMEPAGE_URL "https://github.com/masterbelt/tree-sitter-masterbelt"
         LANGUAGES C)
