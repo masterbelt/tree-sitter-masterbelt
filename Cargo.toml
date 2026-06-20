@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-masterbelt"
 description = "masterbelt grammar for tree-sitter"
-version = "0.1.20260619-nightly.1e5f7f4"
+version = "0.1.20260619-nightly.84bb6ff"
 authors = [""]
 license = "MIT"
 readme = "README.md"
