@@ -2,7 +2,7 @@
 
 The [tree-sitter](https://tree-sitter.github.io/) grammar for the [masterbelt](https://github.com/masterbelt/masterbelt) language.
 
-> **This repository is a generated mirror — do not edit it here.** The source is `toolchain/grammars/tree-sitter-masterbelt` in the masterbelt monorepo; this tree is assembled and published from there (`build/publish-tree-sitter.sh`). Version `0.1.20260619-nightly.84bb6ff`, cut from masterbelt commit `84bb6ffc69fa1f2e6cbd1c803e0a6ab01439fbc7` — the grammar ships under the same version as the language it tracks.
+> **This repository is a generated mirror — do not edit it here.** The source is `toolchain/grammars/tree-sitter-masterbelt` in the masterbelt monorepo; this tree is assembled and published from there (`build/publish-tree-sitter.sh`). Version `0.1.20260622-nightly.18cf1fe`, cut from masterbelt commit `18cf1fe6ea56c94446b60c10d767f43b8e1d15c7` — the grammar ships under the same version as the language it tracks.
 
 The committed `src/parser.c` means consumers need no tree-sitter CLI — only a C compiler, which the editors and bindings invoke for you.
 
@@ -19,7 +19,7 @@ The highlight queries live in `queries/highlights.scm` (nvim-treesitter capture 
 
 ## Language bindings
 
-- **Go** — `go get github.com/masterbelt/tree-sitter-masterbelt@v0.1.20260619-nightly.84bb6ff` (`bindings/go`, cgo over `src/parser.c`).
+- **Go** — `go get github.com/masterbelt/tree-sitter-masterbelt@v0.1.20260622-nightly.18cf1fe` (`bindings/go`, cgo over `src/parser.c`).
 - **Rust** — `tree-sitter-masterbelt` on crates.io (`bindings/rust`).
 - **Python** — `tree-sitter-masterbelt` on PyPI (`bindings/python`).
 - **Swift** — a SwiftPM package at this repo + tag (`Package.swift`).
